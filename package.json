@@ -1,0 +1,25 @@
+{
+  "name": "Milestone1-FinalProject",
+  "version": "0.0.0",
+  "description": "First iteration of an MVC app that will contain a small mini-game and display the high scores achieved.",
+  "main": "./src/app.js",
+  "scripts": {
+    "start": "node ./src/app.js",
+    "pretest": "jshint ./src",
+    "test": "echo \"tests complete\""
+  },
+  "author": "Derek Lescarbeau",
+  "license": "ISC",
+  "devDependencies": {
+    "jshint": "~2.5.6"
+  },
+  "dependencies": {
+    "body-parser": "^1.15.0",
+    "compression": "^1.6.1",
+    "cookie-parser": "^1.4.1",
+    "express": "^4.13.4",
+    "jade": "^1.11.0",
+    "mongoose": "^4.4.6",
+    "serve-favicon": "^2.3.0"
+  }
+}
