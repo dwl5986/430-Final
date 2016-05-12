@@ -1,6 +1,8 @@
 "use strict";
 
 var app = app || {};
+var scoreForm;
+var scoreValue;
 
 app.main = {
 	//  properties
@@ -15,6 +17,7 @@ app.main = {
 	boundaries: false,
 
 	// Entity Counts
+  numEnemies: 2,
 	numObjectives: 1,
 
 	// Game State Variables
@@ -23,7 +26,7 @@ app.main = {
 
 	// Sound
 	bgAudio: undefined,
-    effectAudio: undefined,
+  effectAudio: undefined,
 
 	GAME_STATE: Object.freeze({
 		MENU : 0,
@@ -164,6 +167,8 @@ app.main = {
 		}
 	},
 
+  enemies: [],
+
 	objectives: [],
 
     // methods
@@ -173,6 +178,9 @@ app.main = {
 		this.canvas.width = this.WIDTH;
 		this.canvas.height = this.HEIGHT;
 		this.ctx = this.canvas.getContext('2d');
+
+    scoreForm = document.querySelector('#scoreForm');
+    scoreValue = document.querySelector('#score');
 
 		// Game Sprites
 		var image = new Image();
@@ -193,8 +201,15 @@ app.main = {
 		this.player.velocityX = 0;
 		this.player.velocityY = 0;
 		this.objectives = [];
+    this.enemies = [];
 
+    this.numEnemies = 2;
 		this.numObjectives = 1;
+
+    for(var i = 0; i < this.numEnemies; i++)
+		{
+			this.enemies.push(this.spawnEnemy(this.canvas));
+		}
 
 		for(var i = 0; i < this.numObjectives; i++)
 		{
@@ -203,6 +218,7 @@ app.main = {
 		// start the game loop
 		this.gameState = 0;
 		this.playerScore = 0;
+    scoreValue.value = this.playerScore;
 	},
 
 	// Main Game Loop
@@ -261,6 +277,18 @@ app.main = {
 		    // Player update and draw
 	    	this.player.playerUpdate(this.canvas);
 	    	this.player.playerDraw(this.ctx);
+
+        // Enemy update and draw, checks if enemies get the player (which triggers game over)
+	    	for(var i = 0; i < this.enemies.length; i++)
+	    	{
+	    		if(playerIntersect(this.player, this.enemies[i]))
+	    		{
+	    			this.gameState = this.GAME_STATE.GAMEOVER;
+	    		}
+	    		this.keepEnemiesFromStacking(this.enemies[i]);
+	    		this.enemies[i].seek(this.player);
+	    		this.enemies[i].draw(this.ctx);
+	    	}
 	    }
 	    this.drawHUD(this.ctx);
 	},
@@ -280,6 +308,22 @@ app.main = {
 		// If the game is over, go to main menu
 		if(app.main.gameState == app.main.GAME_STATE.GAMEOVER)
 		{
+      var score = app.main.playerScore;
+      $.ajax({
+        cache: false,
+        type: 'POST',
+        url: '/scorePage',
+        data: $('#scoreForm').serialize(),
+        dataType: 'json',
+        success: function(result, status, xhr) {
+          window.location = result.redirect;
+        },
+        error: function(xhr, status, error) {
+          var messageObj = JSON.parse(xhr.responseText);
+          //handleError(messageObj.error);
+        }
+      });
+
 			app.main.gameState = app.main.GAME_STATE.MENU;
 			app.main.gameReset();
 			return;
@@ -323,6 +367,7 @@ app.main = {
 		// Game HUD
 		if(this.gameState == this.GAME_STATE.GAME)
 		{
+      this.fillText(ctx, "Enemy Count: " + this.enemies.length, (1/2)*this.WIDTH + 50, 30, "20pt courier", "white");
 			this.fillText(ctx, "Round Score: " + this.playerScore, (1/2)*this.WIDTH - 280, 30, "20pt courier", "white");
 		}
 
@@ -355,6 +400,71 @@ app.main = {
 		this.ctx.fillRect(0,this.HEIGHT/2,this.WIDTH,this.HEIGHT);
 	},
 
+  //Enemy Stuff
+	spawnEnemy: function(canvas){
+
+		var newEnemy =
+		{
+			x: 0,
+			y: 0,
+			radius: 10,
+			velX: 0,
+			velY: 0,
+			speed: 1,
+			image: {},
+			seek: this.enemySeek,
+			draw: this.enemyDraw,
+		}
+		var enemyImage = new Image();
+		enemyImage.src = "/gameCode/media/enemy.png";
+		newEnemy.image = enemyImage;
+
+		return newEnemy;
+	},
+
+	// Seek function for hunting the player
+	enemySeek: function(player){
+		this.targetX = player.x;
+		this.targetY = player.y;
+
+		var tx = this.targetX - this.x,
+        	ty = this.targetY - this.y,
+        	dist = Math.sqrt(tx * tx + ty * ty);
+
+        this.velX = (tx / dist) * this.speed;
+    	this.velY = (ty / dist) * this.speed;
+
+    	this.x += this.velX;
+    	this.y += this.velY;
+	},
+
+	// Draw Enemy
+	enemyDraw: function(ctx){
+		ctx.save();
+		ctx.translate(this.x, this.y);
+		ctx.rotate(this.angle / Math.PI*180 + 4.75);
+		ctx.drawImage(this.image, -this.radius - 1, -this.radius - 1, this.radius*2 + 1, this.radius*2 + 1);
+		ctx.restore();
+	},
+
+	// Keeps enemies from stacking on top of each other, creates twitchy effect
+	keepEnemiesFromStacking: function(enemyChecking){
+
+		var enemyArray = app.main.enemies;
+		for(var i = 0; i < enemyArray.length; i++)
+		{
+			if(enemyArray[i] == enemyChecking)
+				continue;
+			if(playerIntersect(enemyChecking, enemyArray[i]))
+			{
+				enemyChecking.x += getRandom(-3,3);
+				enemyChecking.y += getRandom(-3,3);
+				enemyArray[i].x += getRandom(-3,3);
+				enemyArray[i].y += getRandom(-3,3);
+			}
+		}
+	},
+
 	makeObjective: function(){
 
 		// Draws the Objective
@@ -379,6 +489,13 @@ app.main = {
 				this.y = getRandom(0, app.main.HEIGHT);
 				//Player Score
 				app.main.playerScore++;
+        scoreValue.value = app.main.playerScore;
+
+        //Spawn Enemies
+				for(var i = 0; i < app.main.numEnemies; i++)
+				{
+					app.main.enemies.push(app.main.spawnEnemy(canvas));
+				}
 			}
 		}
 
