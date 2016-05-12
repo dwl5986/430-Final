@@ -28,7 +28,7 @@ var login = function(req, res) {
     }
     req.session.account = account.toAPI();
 
-    res.redirect('/');
+    res.json({redirect: '/'});
   });
 };
 

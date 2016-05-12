@@ -15,7 +15,7 @@ $(document).ready(function() {
       data: data,
       dataType: 'json',
       success: function(result, status, xhr) {
-        //window.location = result.redirect;
+        window.location = result.redirect;
       },
       error: function(xhr, status, error) {
         var messageObj = JSON.parse(xhr.responseText);
