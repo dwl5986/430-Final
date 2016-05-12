@@ -11,16 +11,6 @@ html(lang='en')
     a(href='/scorePage')   Scores  |
     a(href='/logout')   Log Out
     div.divSpacer
-    section#highscore
-    p#errorMessage.hidden
-    form#scoreForm(class='hidden', name='scoreInfo', action='/scorePage', method='POST')
-      label(for='name') User Name: 
-      input#user(type='text', name='name', placeholder='name')
-      label(for='score') User Score: 
-      input#score(type='number', name='score', placeholder='score')
-      input(type="hidden", name="_csrf", value="#{csrfToken}")
-      a#scoreSubmit(href='#') Submit Score
-    div.divSpacer
     section#scores
     if !scores || scores.length == 0
       div
