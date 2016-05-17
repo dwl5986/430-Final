@@ -1,9 +1,147 @@
+body {
+  background-color: #d3d3d3;
+	margin: 0;
+  font-family: 'Dosis', sans-serif;
+}
+a {
+  text-decoration: none;
+}
+#container {
+	width: 100%;
+  height: 100%;
+}
+
+.navbar {
+  background-color: green;
+	margin-bottom: 2%;
+	display: flex;
+  align-items: center;
+	width: 100%;
+	height: 60px;
+	border-right: 1px solid white;
+}
+.navbar a {
+  color: white;
+}
+.navHome {
+	display: flex;
+  align-items: center;
+  justify-content: space-around;
+  font-size: 48px;
+	width: 60%;
+	height: 60px;
+}
+.navLinkContainer {
+	position: static;
+	width: 50%;
+	height: 60px;
+	display: inline-flex;
+	justify-content: space-around;
+  align-items: center;
+	border-left: 1px solid white;
+}
+
+.pageContent {
+  background-color: white;
+  margin: auto;
+	display: flex;
+  justify-content: space-around;
+	width: 80%;
+  height: 500px;
+  border-radius: 20px;
+}
+.game_Content {
+  background-color: white;
+  margin: auto;
+	display: flex;
+  justify-content: space-around;
+	width: 80%;
+  height: 600px;
+  border-radius: 20px;
+}
+.documentation_Content {
+  background-color: white;
+  margin: auto;
+	display: flex;
+  justify-content: space-around;
+	width: 80%;
+  border-radius: 20px;
+}
+.login_pageContent {
+  background-color: #d3d3d3;
+  margin: auto;
+	display: flex;
+  justify-content: space-around;
+	width: 80%;
+  height: 500px;
+}
+.loginContainer {
+  background-color: white;
+  margin: auto;
+  padding: 1px 0px;
+  width: 300px;
+  text-align: center;
+  border-radius: 10px;
+}
+.column_1 {
+	margin: auto;
+	width: 100%;
+  text-align: center;
+}
+#canvas {
+  margin: auto;
+  width: 640px;
+}
+
+.basicContentHeader {
+	margin: auto;
+	height:30px;
+}
+.basicContent {
+  text-align: justify;
+	margin: auto;
+  width: 80%;
+}
+.scoreContent {
+  background-color: #d3d3d3;
+  margin: auto;
+  width: 80%;
+  height: 400px;
+  overflow: auto;
+  border-radius: 10px;
+}
+
 .divSpacer {
   height: 10px;
 }
-.loginSignupForm {
-  width: 220px;
+
+.loginForm {
+  width: 300px;
+  height: 100px;
 }
+.signupForm {
+  width: 300px;
+  height: 150px;
+}
+.scoreForm {
+  margin: auto;
+  width: 150px;
+  height: 50px;
+}
+
+.scoreForm input {
+  margin: auto;
+  width: 100%;
+}
+.loginForm input {
+  margin: auto;
+  width: 90%;
+}
+.signupForm input {
+  margin: auto;
+  width: 90%;
+}
+
 .hidden {
   visibility: hidden;
 }
@@ -11,19 +149,36 @@
   visibility: visible;
 }
 
-.textHolder {
-  width: 800px;
+.showHS {
+  background-color: white;
+  display: static;
+  margin: 5px auto;
+  width: 80%;
+  height: 40px;
+  border-radius: 10px;
+}
+.scoreName {
+  float: left;
+  margin: 10px 15px;
+}
+.scoreScore {
+  float: right;
+  margin: 10px 15px;
 }
 
-.scoreHolder {
-  width: 400px;
+.left-spacing{
+  margin-left: 10px;
 }
-.showHS {
+.total-spacing{
+  margin: 10px;
+}
+.left-column{
   display: inline-block;
-  width: 125px;
-  border: 1px solid black;
+  vertical-align: top;
+  width: 45%;
 }
-.showHS span {
-  display: block;
-  margin: 5px;
+.right-column{
+  display: inline-block;
+  vertical-align: top;
+  width: 45%;
 }

@@ -19,6 +19,8 @@ var router = function(app) {
   // Index
   app.get('/', mid.requiresLogin, controllers.index);
 
+  app.get('/documentation', controllers.documentation)
+
   // All other GETs, 404
   app.get('/*', controllers.notFound);
 };

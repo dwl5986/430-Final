@@ -4,7 +4,9 @@ $(document).ready(function() {
 
   function handleError(message) {
     $('#errorMessage').text(message);
-    $('#errorMessage').toggleClass('show');
+    if ($('#errorMessage').className != 'show') {
+      $('#errorMessage').attr('class', 'show');
+    }
   }
 
   function sendAjax(action, data) {

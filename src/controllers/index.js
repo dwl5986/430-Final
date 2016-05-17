@@ -90,7 +90,6 @@ var scorePage = function(req, res) {
       console.log(err);
       return res.status(400).json({error: 'An error occurred'});
     }
-    console.log(docs);
     res.render('page2', {csrfToken: req.csrfToken(), scores: docs});
   });
 };
@@ -101,7 +100,7 @@ var makeScore = function(req, res) {
   }
 
   var scoreData = {
-    name: req.session.account.username,
+    name: req.body.name,
     score: req.body.score,
     owner: req.session.account._id
   };
@@ -117,6 +116,10 @@ var makeScore = function(req, res) {
   });
 };
 
+var documentation = function(req, res) {
+  res.render('documentation');
+};
+
 //export the relevant public controller functions
 module.exports = {
     loginPage: loginPage,
@@ -128,5 +131,6 @@ module.exports = {
     page1: hostPage1,
     notFound: notFound,
     scorePage: scorePage,
-    makeScore: makeScore
+    makeScore: makeScore,
+    documentation: documentation
 };

@@ -37,7 +37,7 @@ ScoreSchema.statics.findByOwner = function(ownerId, callback) {
     owner: mongoose.Types.ObjectId(ownerId)
   };
 
-  return ScoreModel.find(search).select('name score').exec(callback);
+  return ScoreModel.find().select('name score').exec(callback);
 };
 
 ScoreModel = mongoose.model('HighScore', ScoreSchema);

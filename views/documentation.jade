@@ -1,0 +1,72 @@
+doctype html
+html(lang='en')
+  head
+    title #{title}
+    script(src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js")
+    link(href='https://fonts.googleapis.com/css?family=Dosis', rel='stylesheet', type='text/css')
+    link(rel="stylesheet", type="text/css", href="/assets/styles.css")
+  body
+    div#container
+      div.navbar
+        div.navHome
+          a(href='/') The Collective
+        div.navLinkContainer
+          a(href='/page1') Game Page
+          a(href='/scorePage') High Scores
+          a(href='/documentation') Documentation
+          a(href='/logout') Log Out
+      div.documentation_Content
+        div.column_1
+          div.basicContent
+            div.left-spacing
+              h2(style='padding-top: 5px;') Semester Project - Coin Collection!
+            div.total-spacing
+              h4.right-spacing Brief Description
+              p
+                | This multi-user experience will be a game in which players fly around to collect coins that will increase their score. They play until they die and then their score is posted to the site when the game is reset.
+              p
+                | So for this multiple experience application, I wanted to make a game that would be fun (while staying in scope), but I also wanted to use web development skills, and specifically MVC as well. So, the whole point of the experience is to collect the most coins, but the really satisfying part of that will be seeing your username on the high scores page.
+              p
+                | The game itself will be pretty simple, with asteroids-style floating movement. There are enemies that follow and attack you, and your goal is to avoid them and collect as many "coins" as possible.
+              p
+                | The MVC application that will be hosting the game won't really be that complicated either. There won't be anything like user accounts, or continuing your games, and the high-score will be from one time sessions associated with a username entered for that game. So basically, you can go to the site, play the game with a username, and then go to the high scores page and see your score associated with that username.
+            div.left-column
+              h4.left-spacing Controls / Background
+              ul
+                li WASD for Movement
+                li Spacebar for Weapons/Ability
+                hr
+                li As a space pirate, plunder is your only concern. Collect it all.
+            div.right-column
+              h4.left-spacing List of Features
+              ul
+                li Collection Game for users to play.
+                li An MVC host site that will display high scores and any other information.
+            div.total-spacing
+              h4.right-spacing Technical Points
+              p
+                | The server will be in charge of keeping track of highscore as well as serving the pages for the MVC host site.
+              p
+                | The client will deal with all of the player input as well as most (if not all) of the game's calculations.
+              p
+                | As far as assets are concerned, I've made games similar to this one in the past and have sprites saved that I can reuse. All I have to do is double check the permissions of the images again to verify that I can use them. Otherwise, geometry!
+              p
+                | Still working on a user interface that makes sense, specifically how it communicates the game's basic controls to the user. I made a canvas game once that was very basic, so I might try to take some ideas from that application.
+            div.total-spacing
+              h4.right-spacing Changes from Original design
+              p
+                | Scoped out the shared world goal of the game. Ultimately the shared world took up too much time and resources and I didn't make enough progress to complete it. As a result, the game is single player and the main multi-user experience comes on the high score page, where everyone's score are held.
+              p 
+                | I was unable to sort the scores out in any meaningful ways. Getting them from the database made it difficult to organize the data, and the scores are displayed based on when they were submitted rather than how high the score was.
+            div.total-spacing
+              h4.right-spacing Post-Mortem
+              p
+                | Done Well: The MVC site is clean and looks nice. The game plays well and the information on the scores page is displayed in a way that is easy to read and understand. I kept my code mostly clean and concise.
+              p
+                | Needs Improvement: I should have come for more help regarding sorting the high scores and syncing the game world. The game world was supposed to be the coolest part of this project, and I'm disappointed I wasn't able to make it work the way I wanted. As for sorting the high scores, I am going to try to fix this after the project deadline, for my own satisfaction.
+              p
+                | Future Suggestions: Take a run at every problem in your project within the first few weeks of starting it. Make sure you know what is going to be required for each step of the project, and if you'll need help with any of it. I found out too late that I'd be unable to get the shared game world working, and could've easily sorted the high scores if I had come for help before the project ended. Poor planning on my part.
+            div.total-spacing
+              h4.right-spacing High Level Architecture
+              p 
+                | No diagram, but my architecture was pretty simple. For this project, as it is MVC, the client requests pages from the server, which serves them to the client if they are logged in. The score page of the project also queries the database for all of the stored scores. The pages are .jade files that are served once the user's credentials check out or they sign up. The only page that is available without login is the documentation page, should someone come to the site looking for information.

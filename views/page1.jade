@@ -2,24 +2,29 @@ doctype html
 html(lang='en')
   head
     script(src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js")
+    link(href='https://fonts.googleapis.com/css?family=Dosis', rel='stylesheet', type='text/css')
     link(rel="stylesheet", type="text/css", href="/assets/styles.css")
   body
     script(src='/gameCode/js/utilities.js')
     script(src='/gameCode/js/loader.js')
     script(src='/gameCode/js/main.js')
     script(src='/gameCode/js/keys.js')
-    h1 Welcome to the Game Page
-    // links or URLs are always GET resources as they are getting (retrieving) a resource
-    a(href='/') Home  |
-    a(href='/page1')   Game Page  |
-    a(href='/scorePage')   Scores  |
-    a(href='/logout')   Log Out
-    div.divSpacer
-    form#scoreForm(class='hidden', name='scoreInfo', action='/scorePage', method='POST')
-      label(for='name') User Name: 
-      input#user(type='text', name='name', value='#{user}')
-      label(for='score') User Score: 
-      input#score(type='number', name='score', placeholder='score')
-      input(type="hidden", name="_csrf", value="#{csrfToken}")
-    div
-      canvas#canvas(height='600', width='800', style='border: 1px solid black') Please use an HTML 5 browser
+    div#container
+      div.navbar
+        div.navHome
+          a(href='/') The Collective
+        div.navLinkContainer
+          a(href='/page1') Game Page
+          a(href='/scorePage') High Scores
+          a(href='/documentation') Documentation
+          a(href='/logout') Log Out
+      div.game_Content
+        div.column_1
+          form#scoreForm(class='scoreForm', name='scoreInfo', action='/scorePage', method='POST')
+            label(for='name') User Name: 
+            input#user(type='text', name='name', value='#{user}')
+            label(class='hidden', for='score') User Score: 
+            input#score(class='hidden', type='number', name='score', placeholder='score')
+            input(class='hidden', type="hidden", name="_csrf", value="#{csrfToken}")
+          div#canvas
+            canvas#canvas(height='480', width='640', style='border: 1px solid black') Please use an HTML 5 browser

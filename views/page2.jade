@@ -2,25 +2,30 @@ doctype html
 html(lang='en')
   head
     script(src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js")
+    link(href='https://fonts.googleapis.com/css?family=Dosis', rel='stylesheet', type='text/css')
     link(rel="stylesheet", type="text/css", href="/assets/styles.css")
   body
-    h1 Your Scores
-    // links or URLs are always GET resources as they are getting (retrieving) a resource
-    a(href='/') Home  |
-    a(href='/page1')   Game Page  |
-    a(href='/scorePage')   Scores  |
-    a(href='/logout')   Log Out
-    div.divSpacer
-    section#scores
-    if !scores || scores.length == 0
-      div
-        h3 No High Scores Yet
-    else
-      h3 Scores
-      div.scoreHolder
-        each val in scores
-          div.showHS
-            span Name: #{val.name}
-            span Score: #{val.score}
+    div#container
+      div.navbar
+        div.navHome
+          a(href='/') The Collective
+        div.navLinkContainer
+          a(href='/page1') Game Page
+          a(href='/scorePage') High Scores
+          a(href='/documentation') Documentation
+          a(href='/logout') Log Out
+      div.login_pageContent
+        div.column_1
+          if !scores || scores.length == 0
+            div.basicContentHeader
+              h3 No High Scores Yet
+          else
+            div.basicContentHeader
+              h3 Scores
+            div.scoreContent
+              each val in scores
+                div.showHS
+                  span.scoreName Name: #{val.name}
+                  span.scoreScore Score: #{val.score}
 block scripts
   script(src='/assets/client.js')
